@@ -1,0 +1,8 @@
+version: '2.2'
+services:
+  nginx:
+    image: nginx:1.21
+    volumes:
+      - ./nginx-insecure.conf:/etc/nginx/nginx.conf:ro
+    ports: [ "80:80", "9002:9002" ]
+    depends_on: [ catalyst ]
