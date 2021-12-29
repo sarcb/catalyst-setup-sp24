@@ -9,8 +9,8 @@ services:
       - arangodb:/var/lib/arangodb3
     ulimits:
       nofile:
-        hard: 8192
-        soft: 8192
+        hard: 1048576
+        soft: 1048576
 
   emitter:
     image: emitter/server
