@@ -7,6 +7,10 @@ services:
       ARANGO_ROOT_PASSWORD: M1qLriWYtac2KQgRIf15xDenrwjqxfpa
     volumes:
       - arangodb:/var/lib/arangodb3
+    ulimits:
+      nofile:
+        hard: 8192
+        soft: 8192
 
   emitter:
     image: emitter/server
