@@ -11,12 +11,14 @@ services:
       nofile:
         hard: 1048576
         soft: 1048576
+    networks: [ catalyst ]
 
   emitter:
     image: emitter/server
     restart: unless-stopped
     environment:
       - EMITTER_LICENSE=PfA8ID8izeSlDUlNZgNXo77DQV9QzlNtxTk64WreCXKfDZsREAVXUXwh20UKOZdkALbLTmOytO_iC6mc_twKAQ:3
+    networks: [ catalyst ]
 
   minio:
     image: minio/minio:RELEASE.2021-12-10T23-03-39Z
@@ -27,6 +29,7 @@ services:
     volumes:
       - minio:/data
     command: server /data
+    networks: [ catalyst ]
 
   postgres:
     image: postgres:13
@@ -37,6 +40,7 @@ services:
       POSTGRES_PASSWORD: password
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks: [ catalyst ]
 
   keycloak:
     image: quay.io/keycloak/keycloak:14.0.0
@@ -56,6 +60,7 @@ services:
     volumes:
       - ./realm.json:/tmp/realm.json
     depends_on: [ postgres ]
+    networks: [ catalyst ]
 
   catalyst:
     image: ghcr.io/securitybrewery/catalyst:main
@@ -76,8 +81,13 @@ services:
     depends_on: [ arangodb, emitter, minio, keycloak ]
     extra_hosts:
       - "localhost:172.17.0.1"
+    networks: [ catalyst ]
 
 volumes:
   minio:
   postgres_data:
   arangodb:
+
+networks:
+  catalyst:
+    name: catalyst
