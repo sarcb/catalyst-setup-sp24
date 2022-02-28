@@ -75,6 +75,7 @@ services:
       S3_PASSWORD: minio123
       EMITTER_IO_KEY: A9RysEsPJni8RaHeg_K0FKXQNfBrUyw-
       AUTH_BLOCK_NEW: "false"
+      AUTH_ADMIN_USERS: bob
       INITIAL_API_KEY: d0169af94c40981eb4452a42fae536b6caa9be3a
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
