@@ -17,7 +17,7 @@ if [ -z "$1" ]; then
     echo "For test installation on your local machine you can use: ./install_catalyst.sh http://localhost http://localhost:8082"
     exit 1
 else
-    catalyst_addr="$2"
+    catalyst_addr="$1"
 fi
 
 # set default authelia hostname
@@ -28,7 +28,7 @@ if [ -z "$2" ]; then
     echo "For test installation on your local machine you can use: ./install_catalyst.sh http://localhost http://localhost:8082"
     exit 1
 else
-    authelia_addr="$3"
+    authelia_addr="$2"
 fi
 
 AUTHELIA_HOST=${authelia_addr#"http://"}
