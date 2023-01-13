@@ -59,7 +59,7 @@ cp nginx/nginx.tmpl.conf nginx/nginx.conf
 
 # adapt docker-compose.yml
 sed -i.bak "s#__SECRET__#$( openssl rand -hex 64 )#" docker-compose.yml
-sed -i.bak "s#__ARANGO_ROOT_PASSWORD__#$( openssl rand -hex 64 )#" docker-compose.yml
+sed -i.bak "s#__ARANGO_ROOT_PASSWORD__#$( openssl rand -hex 32 )#" docker-compose.yml
 sed -i.bak "s#__S3_PASSWORD__#$( openssl rand -hex 64 )#" docker-compose.yml
 sed -i.bak "s#__INITIAL_API_KEY__#$INITIAL_API_KEY#" docker-compose.yml
 sed -i.bak "s#__AUTHELIA_JWT_SECRET__#$( openssl rand -hex 64 )#" docker-compose.yml
