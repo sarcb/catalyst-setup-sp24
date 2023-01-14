@@ -31,6 +31,22 @@ else
     authelia_addr="$2"
 fi
 
+if  [[ "$catalyst_addr" != "https://"* ]] && [[ "$catalyst_addr" != "http://localhost" ]]; then
+    echo "Error: hostname must start with https:// or be http://localhost"
+    echo "Usage: ./install_catalyst.sh <hostname> <authelia_hostname>"
+    echo "Example: ./install_catalyst.sh https://dev.catalyst-soar.com https://dev-authelia.catalyst-soar.com"
+    echo "For test installation on your local machine you can use: ./install_catalyst.sh http://localhost http://localhost:8082"
+    exit 1
+fi
+
+if  [[ "$authelia_addr" != "https://"* ]] && [[ "$authelia_addr" != "http://localhost:8082" ]]; then
+    echo "Error: authelia hostname must start with https:// or be http://localhost:8082"
+    echo "Usage: ./install_catalyst.sh <hostname> <authelia_hostname>"
+    echo "Example: ./install_catalyst.sh https://dev.catalyst-soar.com https://dev-authelia.catalyst-soar.com"
+    echo "For test installation on your local machine you can use: ./install_catalyst.sh http://localhost http://localhost:8082"
+    exit 1
+fi
+
 AUTHELIA_HOST=${authelia_addr#"http://"}
 AUTHELIA_HOST=${AUTHELIA_HOST#"https://"}
 AUTHELIA_DOMAIN=${AUTHELIA_HOST%%:*}
