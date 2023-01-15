@@ -163,7 +163,8 @@ echo "users_database:" >authelia/users_database.yml
 for user in "${users[@]}"; do
   username=${user%%:*}
   password=${user#*:}
-  argon2_hash=$(echo -n "$password" | docker run --rm -i authelia/authelia authelia hash-password)
+  argon2_output=$(docker run --rm -i authelia/authelia:4 authelia hash-password -- "$password")
+  argon2_hash=${argon2_output#*Password hash: }
   email=${password#*:}
   {
       echo "  $username:"

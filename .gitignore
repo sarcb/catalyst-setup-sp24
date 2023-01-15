@@ -1,6 +1,8 @@
 *.bak
-docker-compose.yml
+INITIAL_API_KEY
 authelia/configuration.yml
+authelia/users_database.yml
+docker-compose.yml
 nginx/nginx.conf
 
 authelia.key
