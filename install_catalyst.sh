@@ -1,15 +1,15 @@
 #!/bin/bash
 set -e
 
-# ./install_catalyst.sh https://try.catalyst-soar.com https://try-authelia.catalyst-soar.com --no-ssl --user alice:alice --user bob:bob
+# ./install_catalyst.sh https://try.catalyst-soar.com https://try-authelia.catalyst-soar.com --no-ssl alice:alice:alice@example.com bob:bob:bob@example.com admin:admin:admin@example.com"
 
 print_usage() {
   echo "Usage:"
   echo "  ./install_catalyst.sh [-h | --help]"
-  echo "  ./install_catalyst.sh <hostname> <authelia_hostname> <ssl_certificate> <ssl_certificate_key> <user:password:email> <user:password:email> ..."
-  echo "  ./install_catalyst.sh <hostname> <authelia_hostname> --no-ssl <user:password:email> <user:password:email> ..."
+  echo "  ./install_catalyst.sh <hostname> <authelia_hostname> <ssl_certificate> <ssl_certificate_key> <admin-user:admin-password:admin-email> <user:password:email> ..."
+  echo "  ./install_catalyst.sh <hostname> <authelia_hostname> --no-ssl <admin-user:admin-password:admin-email> <user:password:email> ..."
   echo "Example:"
-  echo "  ./install_catalyst.sh https://try.catalyst-soar.com https://try-authelia.catalyst-soar.com --no-ssl alice:alice:alice@example.com bob:bob:bob@example.com admin:admin:admin@example.com"
+  echo "  ./install_catalyst.sh https://try.catalyst-soar.com https://try-authelia.catalyst-soar.com --no-ssl admin:admin:admin@example.com alice:alice:alice@example.com bob:bob:bob@example.com"
 }
 
 # if help flag
@@ -103,6 +103,8 @@ else
     users+=("$4")
     shift
   done
+
+  admin_user=$(echo "${users[0]}" | cut -d: -f1)
 fi
 
 AUTHELIA_HOST=${authelia_addr#"http://"}
@@ -149,6 +151,7 @@ sed -i.bak "s#__AUTHELIA_SESSION_SECRET__#$(openssl rand -hex 64)#" docker-compo
 sed -i.bak "s#__AUTHELIA_CLIENT_SECRET__#$AUTHELIA_CLIENT_SECRET#" docker-compose.yml
 sed -i.bak "s#__ADDR__#$catalyst_addr#" docker-compose.yml
 sed -i.bak "s#__AUTHELIA_ADDR__#$authelia_addr#" docker-compose.yml
+sed -i.bak "s#__ADMIN_USER__#$admin_user#" docker-compose.yml
 
 # adapt authelia configuration.yml
 sed -i.bak "s#__AUTHELIA_CLIENT_SECRET__#$AUTHELIA_CLIENT_SECRET#" authelia/configuration.yml
