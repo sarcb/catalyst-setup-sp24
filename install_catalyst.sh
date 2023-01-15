@@ -159,18 +159,19 @@ sed -i.bak "s#__ADDR__#$catalyst_addr#" authelia/configuration.yml
 sed -i.bak "s#__DOMAIN__#$AUTHELIA_DOMAIN#" authelia/configuration.yml
 
 # create authelia users_database.yml
-echo "users_database:" >authelia/users_database.yml
+echo "users:" >authelia/users_database.yml
 for user in "${users[@]}"; do
-  username=${user%%:*}
-  password=${user#*:}
+  username=$(echo "$user" | cut -d: -f1)
+  password=$(echo "$user" | cut -d: -f2)
+  email=$(echo "$user" | cut -d: -f3)
   argon2_output=$(docker run --rm -i authelia/authelia:4 authelia hash-password -- "$password")
-  argon2_hash=${argon2_output#*Password hash: }
+  argon2_hash=${argon2_output#*Digest: }
   email=${password#*:}
   {
       echo "  $username:"
-      echo "    displayname: $username"
-      echo "    password: $argon2_hash"
-      echo "    email: $email"
+      echo "    displayname: \"$username\""
+      echo "    password: \"$argon2_hash\""
+      echo "    email: \"$email\""
   } >>authelia/users_database.yml
 done
 
