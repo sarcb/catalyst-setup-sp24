@@ -116,7 +116,7 @@ INITIAL_API_KEY=$(openssl rand -hex 64)
 echo "$INITIAL_API_KEY" >INITIAL_API_KEY
 
 # download catalyst setup
-curl -sL "https://github.com/SecurityBrewery/catalyst-setup/archive/refs/tags/v0.10.1.zip" -o catalyst_install.zip
+curl -sL "https://github.com/SecurityBrewery/catalyst-setup/archive/refs/tags/v0.10.3.zip" -o catalyst_install.zip
 unzip catalyst_install.zip
 cd "catalyst-setup-0.10.1"
 
