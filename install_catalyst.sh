@@ -118,7 +118,7 @@ echo "$INITIAL_API_KEY" >INITIAL_API_KEY
 # download catalyst setup
 curl -sL "https://github.com/SecurityBrewery/catalyst-setup/archive/refs/tags/v0.10.3.zip" -o catalyst_install.zip
 unzip catalyst_install.zip
-cd "catalyst-setup-0.10.1"
+cd "catalyst-setup-0.10.3"
 
 # generate authelia keys
 openssl genrsa -out authelia/private.pem 4096
