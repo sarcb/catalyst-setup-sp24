@@ -54,7 +54,7 @@ services:
     networks: [ catalyst ]
 
   authelia:
-    image: authelia/authelia:4
+    image: authelia/authelia:4.37.5
     restart: unless-stopped
     environment:
       AUTHELIA_JWT_SECRET: "__AUTHELIA_JWT_SECRET__"
