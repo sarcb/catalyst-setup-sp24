@@ -185,7 +185,20 @@ fi
 # start containers
 docker compose pull
 docker compose build --no-cache
-docker compose up --build --force-recreate --detach
+
+echo "Do you want to start the containers? (y/n)"
+read -r start
+if [ "$start" != "y" ]; then
+  exit 0
+fi
+
+echo "Do you want them to run in the background? (y/n)"
+read -r start
+if [ "$start" != "y" ]; then
+  docker compose up --build --force-recreate
+else
+  docker compose up --build --force-recreate --detach
+fi
 
 # remove all .bak files
 find . -name "*.bak" -type f -delete
