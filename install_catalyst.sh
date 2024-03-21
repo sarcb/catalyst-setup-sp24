@@ -12,6 +12,16 @@ print_usage() {
   echo "  ./install_catalyst.sh https://try.catalyst-soar.com https://try-authelia.catalyst-soar.com --no-ssl admin:admin:admin@example.com alice:alice:alice@example.com bob:bob:bob@example.com"
 }
 
+# verify that this is the first install to prevent arangodb root password issues
+if [ -n "$(docker volume ls -q --filter name=catalyst-setup-sp24-main_arangodb)" ]; then
+  echo "ERROR: Catalyst seems to already be installed.  To start/stop it, use the following commands:"
+  echo "TO START:"
+  echo "  docker compose -f /opt/catalyst/catalyst-setup-sp24-main/docker-compose.yml up --detach"
+  echo "TO STOP:"
+  echo "  docker compose -f /opt/catalyst/catalyst-setup-sp24-main/docker-compose.yml down"
+  exit 1
+fi
+
 # if help flag
 if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
   print_usage
